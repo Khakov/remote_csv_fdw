@@ -26,28 +26,19 @@ install package:
 
 create foreign server:
 ```
+create extension multicorn;
 CREATE SERVER remote_csv_fdw FOREIGN DATA WRAPPER multicorn OPTIONS (
-    WRAPPER 'csvgz_fdw.CSVGZForeignDataWrapper'
+    WRAPPER 'remote_fdw.RemoteCsvFDW'
 );
 ```
 
 ```
-CREATE FOREIGN TABLE FDW_TEST (
-    A INTEGER,
-    B VARCHAR,
-    C TEXT,
-    D TEXT,
-    E TIMESTAMP
-) SERVER CSVGZ_SRV OPTIONS (
-    FILE_NAME '/opt/PostgreSQL/csv/test.csv.gz'
-);
-CREATE FOREIGN TABLE FDW_TEST2 (
-    A INTEGER,
-    B VARCHAR,
-    C TEXT,
-    D TEXT,
-    E TIMESTAMP
-) SERVER CSVGZ_SRV OPTIONS (
-    FILE_NAME '/opt/PostgreSQL/csv/test.csv'
+CREATE FOREIGN TABLE test (
+    Username varchar,
+    Identifier int,
+    "First name" varchar,
+    "Last name" varchar
+) SERVER remote_csv_fdw OPTIONS (
+    file_name 'https://support.staffbase.com/hc/en-us/article_attachments/360009197031/username.csv'
 );
 ```
