@@ -39,6 +39,6 @@ CREATE FOREIGN TABLE test (
     "First name" varchar,
     "Last name" varchar
 ) SERVER remote_csv_fdw OPTIONS (
-    filename 'https://support.staffbase.com/hc/en-us/article_attachments/360009197071/email.csv'
+    filename 'https://support.staffbase.com/hc/en-us/article_attachments/360009197071/email.csv', delimiter ';'
 );
 ```
