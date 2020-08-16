@@ -11,7 +11,7 @@ class RemoteCsvFDW(ForeignDataWrapper):
         super(RemoteCsvFDW, self).__init__(fdw_options, fdw_columns)
         self.filename = fdw_options["filename"]
         self.delimiter = fdw_options.get("delimiter", ",")
-        self.header = int(fdw_options.get('header', True))
+        self.header = fdw_options.get('header', True)
         self.columns = fdw_columns
 
     def execute(self, quals, columns):
@@ -20,7 +20,7 @@ class RemoteCsvFDW(ForeignDataWrapper):
             count = 0
             checked = False
             for line in reader:
-                if not self.header or self.header and count>1:
+                if not self.header or self.header and count>=1:
                     if not checked:
                         # On first iteration, check if the lines are of the
                         # appropriate length
